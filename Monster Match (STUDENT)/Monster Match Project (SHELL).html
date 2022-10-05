@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- add a title-->
+	<title>
+		Monster Match Project
+	</title>
+	<style>
+		body {
+                padding: 18px; 
+                border: 5px solid white; 
+                text-align: center; 
+                background: rgb(2,0,36);
+                background: linear-gradient(90deg, rgb(241, 226, 17) 0%, rgb(17, 173, 245) 44%, rgb(2, 236, 80) 100%);
+                font-family: "Trebuchet MS", Helvetica, sans-serif; color: white;
+            }
+            p{
+                font-style: italic;
+            }
+	</style>
+
+	<!-- add CSS between <style> tags-->
+	<script>
+		 // Image Citations:
+        // monster1.svg: provided by teacher
+        // monster2.svg: provided by teacher
+        // monster3.svg: provided by teacher
+		// monster4.svg: provided by teacher
+		
+        
+		
+		// initialize global variables here
+		var p1Cards = 0;
+		var p2Cards = 0;
+
+		var currentIndex1 = "";
+		var currentIndex2 = "";
+
+		var currentCard1 = "";
+		var currentCard2 = "";
+
+		var cardsPerDeck = 8;
+
+		var personalScore = 0;
+
+		let imageArray = ["monster1.svg", "monster2.svg", "monster3.svg",
+        "monster4.svg"];
+
+		var gameState = "Game Over"
+		
+		// write a function that generates a random number
+		// similar to your Marvel project, give appropriate citation
+		// Description: Return a random integer, n, such that min <= n <= max 
+        // Citation: Mozilla Foundation, https://developer.mozilla.org/enUS/docs/Web/JavaScript/Reference/Global_Objects/Math/random 
+        // Input/Parameters: Two floating point numbers, min and max 
+        // Output/Return: Returns a random integer between min and max 
+       
+
+		// write a function that formats an image similar to your Marvel project
+		// formats images in correct order
+		//Retrieved from movietrivia.html
+        function formatImage(inputArray, index)
+        {
+            let fileName = inputArray[index];
+            let output = "<img src='pics/" + fileName + "' width = 200 height = 300>"
+            return output;
+        }
+
+		// write a function that displays instructions
+		function displayInstructions()
+		{
+			let displayOutput = 'These are the instructions: <br>'  
+           
+            displayOutput += "Full Instructions: Each player has a deck of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" <br>" +
+			"The user will need to press \"Y\" for yes or \"N\" for no, depending whether there is currently a match on <br>" +
+			" the board. If the user is correct, their score is increased by 1. If they are incorrect their scored is! reduced by 1. You win the game once you reach a score of 10! Press \"Space\" to receive a new set of <br>" +
+			"cards once a valid guess is made";
+            
+            //Puts output in divIdFullAnswerKey
+            document.getElementById('divIdInstructions').innerHTML = displayOutput;
+		}
+		//6
+		// write a function that displays scores
+		function displayScores()
+		{
+			divIdScore.innerHTML = "Score: " + personalScore;
+		}
+		function randomInt(min, max) 
+		{
+			min = Math.ceil(min); 
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min + 1)) + min; // inclusive on min and max
+		}
+		//7
+		// write a function that deals new cards
+		function dealNew()
+		{
+			var arrayLength = imageArray.length;
+            currentCard1 = randomInt(0, arrayLength - 1)
+			currentCard2 = randomInt(0, arrayLength - 1)
+            var picture1 = formatImage(imageArray,currentCard1)
+			var picture2 = formatImage(imageArray,currentCard2)
+            divIdOutput1.innerHTML = picture1;
+			divIdOutput2.innerHTML = picture2;
+			// Retrieved from https://www.techiedelight.com/detect-enter-key-press-javascript/#:~:text=In%20plain%20JavaScript%2C%20you%20can,an%20Enter%20key%20is%20pressed on 10/5/22 at 1:10:03 PM
+			// document.addEventListener("keyup", function(event) 
+			// {
+			// 	if (event.keyCode === 13) 
+			// 	{
+			// 		if(picture1 == picture2)
+			// 		{
+			// 			alert('Correct');
+			// 		}
+			// 		else
+			// 		{
+			// 			alert("incorrect")
+			// 		}
+			// 	}
+			// });
+			gameState = "play"
+		}
+		// write a function that starts a new game of Monster Match
+		function newGame()
+		{
+
+		}
+		
+		// write a function that check for a winner
+		function checkWinner()
+		{
+
+		}
+		// write a checkMatch(event) function
+		function checkMath(event)
+		{
+			curKey = event.key;
+			if(curKey == 13)
+			{
+				alert(yes)
+			}
+		}
+	</script>
+</head>
+	<!--Add an onKeyUp event handler to <body> that calls "checkMatch(event)"-->
+    <body onload="dealNew()" onkeyup="checkMatch(event)">
+        <!--add a header-->
+		<center>
+			<h1>MONSTER MATCH</h1>
+		<div id="divIdScore"></div>
+
+        <!--add a "Start New Game" button that runs a function when clicked-->
+		<input type="button" value="Start New Game" onclick="newGame()">
+		<!--add a "Show Instructions" button that runs a function when clicked-->
+		<input type="button" value="Show Instructions" onclick="displayInstructions()">
+		<!--here's a table you can have for free:-->
+		<table> 
+			<tr>
+				<th><span id="player1Id"></span></th>
+				<th><span id="player2Id"></span></th> 
+			</tr> 
+			<tr>
+				<th><span id="image1Id"></span></th>
+				<th><span id="image2Id"></span></th> 
+			</tr> 
+		</table>
+		
+		<!-- add <div> elements with appropriate ids for a score, game message, and game instructions-->
+			<div id="divIdOutput1"></div>
+			<div id="divIdOutput2"></div>
+			<br>
+			<div id="divIdInstructions"></div>
+		</center>
+    </body>
+</html>
