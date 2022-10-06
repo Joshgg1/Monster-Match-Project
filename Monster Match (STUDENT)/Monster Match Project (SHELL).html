@@ -47,6 +47,9 @@
         "monster4.svg"];
 
 		var gameState = "Game Over"
+
+		var picture1 = ""
+		var picture2 = ""
 		
 		// write a function that generates a random number
 		// similar to your Marvel project, give appropriate citation
@@ -98,31 +101,22 @@
 			var arrayLength = imageArray.length;
             currentCard1 = randomInt(0, arrayLength - 1)
 			currentCard2 = randomInt(0, arrayLength - 1)
-            var picture1 = formatImage(imageArray,currentCard1)
-			var picture2 = formatImage(imageArray,currentCard2)
+            picture1 = formatImage(imageArray,currentCard1)
+			picture2 = formatImage(imageArray,currentCard2)
             divIdOutput1.innerHTML = picture1;
 			divIdOutput2.innerHTML = picture2;
-			// Retrieved from https://www.techiedelight.com/detect-enter-key-press-javascript/#:~:text=In%20plain%20JavaScript%2C%20you%20can,an%20Enter%20key%20is%20pressed on 10/5/22 at 1:10:03 PM
-			// document.addEventListener("keyup", function(event) 
-			// {
-			// 	if (event.keyCode === 13) 
-			// 	{
-			// 		if(picture1 == picture2)
-			// 		{
-			// 			alert('Correct');
-			// 		}
-			// 		else
-			// 		{
-			// 			alert("incorrect")
-			// 		}
-			// 	}
-			// });
+			
 			gameState = "play"
 		}
 		// write a function that starts a new game of Monster Match
 		function newGame()
 		{
-
+			Player1deck = ["monster1", "monster2", "monster3", "monster4", "monster1", "monster2", "monster3", "monster4"]
+			Player2deck = ["monster1", "monster2", "monster3", "monster4", "monster1", "monster2", "monster3", "monster4"]
+			dealNew()
+			displayScores()
+			divIdInstructions.innerHTML += "Press Y if the images match. Else, press N"
+			
 		}
 		
 		// write a function that check for a winner
@@ -131,12 +125,31 @@
 
 		}
 		// write a checkMatch(event) function
-		function checkMath(event)
+		function checkMatch(event)
 		{
 			curKey = event.key;
-			if(curKey == 13)
+			if(curKey == "y")
 			{
-				alert(yes)
+				if(picture1 == picture2)
+				{
+					alert('Correct');
+					personalScore++
+				}
+				else
+				{
+					alert("incorrect")
+				}
+			}
+			if(curKey == "n")
+			{
+				if(picture1 != picture2)
+				{
+					alert('Correct');
+				}
+				else
+				{
+					alert("incorrect")
+				}
 			}
 		}
 	</script>
