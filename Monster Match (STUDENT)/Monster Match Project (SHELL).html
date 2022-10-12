@@ -50,6 +50,9 @@
 
 		var picture1 = ""
 		var picture2 = ""
+		var Player1deck = ["monster1", "monster2", "monster3", "monster4", "monster1", "monster2", "monster3", "monster4"]
+		var	Player2deck = ["monster1", "monster2", "monster3", "monster4", "monster1", "monster2", "monster3", "monster4"]
+		
 		
 		// write a function that generates a random number
 		// similar to your Marvel project, give appropriate citation
@@ -105,57 +108,77 @@
 			picture2 = formatImage(imageArray,currentCard2)
             divIdOutput1.innerHTML = picture1;
 			divIdOutput2.innerHTML = picture2;
-			
+			displayScores()
 			gameState = "play"
 		}
 		// write a function that starts a new game of Monster Match
 		function newGame()
 		{
-			Player1deck = ["monster1", "monster2", "monster3", "monster4", "monster1", "monster2", "monster3", "monster4"]
-			Player2deck = ["monster1", "monster2", "monster3", "monster4", "monster1", "monster2", "monster3", "monster4"]
+			
+			
 			dealNew()
 			displayScores()
-			divIdInstructions.innerHTML += "Press Y if the images match. Else, press N"
+			divIdInstructions.innerHTML = "Press Y if the images match. Else, press N"
 			
 		}
 		
 		// write a function that check for a winner
 		function checkWinner()
 		{
-
+			if(personalScore >= 10)
+			{
+				gameState = "Win"
+			}
 		}
 		// write a checkMatch(event) function
 		function checkMatch(event)
 		{
 			curKey = event.key;
+			if(curKey == " ")
+			 {
+
+				dealNew()
+			 }
+			
 			if(curKey == "y")
 			{
 				if(picture1 == picture2)
 				{
-					alert('Correct');
-					personalScore++
+					divIdInstructions= "Correct <br>" +  "Full Instructions: Each player has a deck of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" <br>" +
+			"The user will need to press \"Y\" for yes or \"N\" for no, depending whether there is currently a match on <br>" +
+			" the board. If the user is correct, their score is increased by 1. If they are incorrect their scored is! reduced by 1. You win the game once you reach a score of 10! Press \"Space\" to receive a new set of <br>" +
+			"cards once a valid guess is made";
 				}
 				else
 				{
-					alert("incorrect")
+					divIdInstructions = "Incorrect <br>" + "Full Instructions: Each player has a deck of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" <br>" +
+			"The user will need to press \"Y\" for yes or \"N\" for no, depending whether there is currently a match on <br>" +
+			" the board. If the user is correct, their score is increased by 1. If they are incorrect their scored is! reduced by 1. You win the game once you reach a score of 10! Press \"Space\" to receive a new set of <br>" +
+			"cards once a valid guess is made";
 				}
 			}
 			if(curKey == "n")
 			{
 				if(picture1 != picture2)
 				{
-					alert('Correct');
+					divIdInstructions= "Correct <br>" +  "Full Instructions: Each player has a deck of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" <br>" +
+			"The user will need to press \"Y\" for yes or \"N\" for no, depending whether there is currently a match on <br>" +
+			" the board. If the user is correct, their score is increased by 1. If they are incorrect their scored is! reduced by 1. You win the game once you reach a score of 10! Press \"Space\" to receive a new set of <br>" +
+			"cards once a valid guess is made";
 				}
 				else
 				{
-					alert("incorrect")
+					divIdInstructions = "Incorrect <br>" + "Full Instructions: Each player has a deck of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" <br>" +
+			"The user will need to press \"Y\" for yes or \"N\" for no, depending whether there is currently a match on <br>" +
+			" the board. If the user is correct, their score is increased by 1. If they are incorrect their scored is! reduced by 1. You win the game once you reach a score of 10! Press \"Space\" to receive a new set of <br>" +
+			"cards once a valid guess is made";
 				}
 			}
 		}
 	</script>
 </head>
 	<!--Add an onKeyUp event handler to <body> that calls "checkMatch(event)"-->
-    <body onload="dealNew()" onkeyup="checkMatch(event)">
+    <body onkeyup="checkMatch(event)">
         <!--add a header-->
 		<center>
 			<h1>MONSTER MATCH</h1>
