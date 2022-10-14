@@ -46,12 +46,13 @@
 		let imageArray = ["monster1.svg", "monster2.svg", "monster3.svg",
         "monster4.svg"];
 
-		var gameState = "Game Over"
+		var gameState = "play"
 
 		var picture1 = ""
 		var picture2 = ""
 		var Player1deck = ["monster1", "monster2", "monster3", "monster4", "monster1", "monster2", "monster3", "monster4"]
 		var	Player2deck = ["monster1", "monster2", "monster3", "monster4", "monster1", "monster2", "monster3", "monster4"]
+		
 		
 		
 		// write a function that generates a random number
@@ -113,12 +114,12 @@
 		// write a function that starts a new game of Monster Match
 		function newGame()
 		{
-			
-			gameState = "play"
+			personalScore = 0;
 			dealNew()
 			displayScores()
 			divIdInstructions.innerHTML = "Press Y if the images match. Else, press N"
-			personalScore = 0;
+			
+			
 			
 		}
 		
@@ -128,15 +129,27 @@
 			if(personalScore >= 10)
 			{
 				gameState = "Win"
+				divIdInstructions.innerHTML = "You Won! Woooohoooo!!!!"
+				firstCheck = false;
 			}
 		}
 		// write a checkMatch(event) function
 		function checkMatch(event)
 		{
+			curKey = event.key;
+			if (gameState == "pause")
+			{
+				if(curKey == " ")
+				{
+					gameState = "play"
+					dealNew()
+				}
+			}
+			
             if(gameState == "play")
             {
 
-                curKey = event.key;
+                
                 if(curKey == " ")
                 {
                     dealNew()
@@ -226,6 +239,10 @@
 				<th><span id="image1Id"></span></th>
 				<th><span id="image2Id"></span></th> 
 			</tr> 
+			<tr>
+				<th><span id="p1countId"></span></th>
+				<th><span id="p2CountId"></span></th> 
+			</tr>
 		</table>
 		
 		<!-- add <div> elements with appropriate ids for a score, game message, and game instructions-->
