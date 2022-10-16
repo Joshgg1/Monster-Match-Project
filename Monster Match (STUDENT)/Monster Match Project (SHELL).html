@@ -78,10 +78,10 @@
 		{
 			let displayOutput = 'These are the instructions: <br>'  
            
-            displayOutput += "Full Instructions: Each player has a deck of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" <br>" +
-			"The user will need to press \"Y\" for yes or \"N\" for no, depending whether there is currently a match on <br>" +
-			" the board. If the user is correct, their score is increased by 1. If they are incorrect their scored is! reduced by 1. You win the game once you reach a score of 10! Press \"Space\" to receive a new set of <br>" +
-			"cards once a valid guess is made";
+            displayOutput += "Instructions: Each player has a desk of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" The fastest player can claim the other player's card (it is removed from the deck of the slower player's deck and added to the faster player's deck)." +
+			"Player 1 can claim a match by pressing \"a\" before Player 2 can claim the match by pressing \"T\". If a player presses \"a\" or \"1\" when there is not a match," +
+			"they will give up their card. If the cards don't match, press \"n\" to start the next round. When a player has claimed all the" +
+			"other player\'s cards, that player wins the game.";
             
             //Puts output in divIdFullAnswerKey
             document.getElementById('divIdInstructions').innerHTML = displayOutput;
@@ -90,7 +90,7 @@
 		// write a function that displays scores
 		function displayScores()
 		{
-			divIdScore.innerHTML = "Score: " + personalScore;
+			divIdScore.innerHTML = "Player 1 Cards: " + p1Cards + "<br> Player 2 Cards: " + p2Cards;
 		}
 		function randomInt(min, max) 
 		{
@@ -118,6 +118,7 @@
 			dealNew()
 			displayScores()
 			divIdInstructions.innerHTML = "Press Y if the images match. Else, press N"
+			gameState = "play"
 			
 			
 			
@@ -126,11 +127,17 @@
 		// write a function that check for a winner
 		function checkWinner()
 		{
-			if(personalScore >= 10)
+			if(p1Cards <= 0)
 			{
 				gameState = "Win"
-				divIdInstructions.innerHTML = "You Won! Woooohoooo!!!!"
-				firstCheck = false;
+				divIdInstructions.innerHTML = "Player 1 Won! Woooohoooo!!!!"
+				
+			}
+			if(p2Cards <= 0)
+			{
+				gameState = "Win"
+				divIdInstructions.innerHTML = "Player 2 Won! Woooohoooo!!!!"
+				
 			}
 		}
 		// write a checkMatch(event) function
@@ -150,67 +157,63 @@
             {
 
                 
-                if(curKey == " ")
+                if(curKey == "n")
                 {
-                    dealNew()
-                }
-                if(personalScore>= 10)
-                {
-                    divIdInstructions.innerHTML = "Congratulations, you won! Press \"start new game\" to start a new match!"
+                    if(picture1 == picture2)
+					{
+						divIdInstructions.innerHTML = "There is a match on the board! Someone must claim it!"
+						gameState = "play"
+					}
                 }
                 
-                if(curKey == "y")
+                if(curKey == "a")
                 {
                     if(picture1 == picture2)
                     {
-                        divIdInstructions.innerHTML = "Correct <br>" +  "Full Instructions: Each player has a deck of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" <br>" +
-                "The user will need to press \"Y\" for yes or \"N\" for no, depending whether there is currently a match on <br>" +
-                " the board. If the user is correct, their score is increased by 1. If they are incorrect their scored is! reduced by 1. You win the game once you reach a score of 10! Press \"Space\" to receive a new set of <br>" +
-                "cards once a valid guess is made";
-                personalScore++
-                displayScores()
-				checkWinner()
+						p1Cards++
+						p2Cards--
+                        divIdInstructions.innerHTML = "<h1>Player 1 Has Claimed the Match</h1><br>" + "Press \"n\" to deal the next card"
+                	
                     }
                     else if(picture1 != picture2)
                     {
-                        divIdInstructions.innerHTML = "Incorrect <br>" + "Full Instructions: Each player has a deck of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" <br>" +
-                "The user will need to press \"Y\" for yes or \"N\" for no, depending whether there is currently a match on <br>" +
-                " the board. If the user is correct, their score is increased by 1. If they are incorrect their scored is! reduced by 1. You win the game once you reach a score of 10! Press \"Space\" to receive a new set of <br>" +
-                "cards once a valid guess is made";
-                displayScores()
-				checkWinner()
+						p1Cards--
+						p2Cards++
+                        divIdInstructions.innerHTML = "<h1>Player 1 Misfired</h1><br>" + "Press \"n\" to deal the next card" 
+                
                     }
+					gameState = "pause"
+					displayScores()
+					checkWinner()
                     
                 }
-                else if(curKey!= "y" && curKey!="n")
+                else if(curKey!= "a" || curKey!="l")
                 { 
                     divIdInstructions.innerHTML = "Did you click the wrong key?"
                 }
                 
-                if(curKey == "n")
+                if(curKey == "l")
                 {
                     if(picture1 != picture2)
                     {
-                        divIdInstructions.innerHTML = "Correct <br>" +  "Full Instructions: Each player has a deck of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" <br>" +
-                "The user will need to press \"Y\" for yes or \"N\" for no, depending whether there is currently a match on <br>" +
-                " the board. If the user is correct, their score is increased by 1. If they are incorrect their scored is! reduced by 1. You win the game once you reach a score of 10! Press \"Space\" to receive a new set of <br>" +
-                "cards once a valid guess is made";
-                personalScore++
-                displayScores()
-				checkWinner()
+						p2Cards--
+						p1Cards++
+                        divIdInstructions.innerHTML = "<h1>Player 2 Misfired</h1><br>" + "Press \"n\" to deal the next card"
+               
                     }
                     else if(picture1 == picture2)
                     {
-                        divIdInstructions.innerHTML = "Incorrect <br>" + "Full Instructions: Each player has a deck of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" <br>" +
-                "The user will need to press \"Y\" for yes or \"N\" for no, depending whether there is currently a match on <br>" +
-                " the board. If the user is correct, their score is increased by 1. If they are incorrect their scored is! reduced by 1. You win the game once you reach a score of 10! Press \"Space\" to receive a new set of <br>" +
-                "cards once a valid guess is made";
-                displayScores()
-				checkWinner()
+						p2Cards++
+						p1Cards--
+                        divIdInstructions.innerHTML = "<h1>Player 2 Has Claimed the Match</h1><br>" + "Press \"n\" to deal the next card" 
+               
                     }
+					gameState = "pause"
+					displayScores()
+					checkWinner()
                     
                 }
-                else if(curKey!= "y" && curKey!="n")
+                else if(curKey!= "y" || curKey!="n" || curKey != " ")
                 {
                     divIdInstructions.innerHTML = "Did you click the wrong key?"
                 }
