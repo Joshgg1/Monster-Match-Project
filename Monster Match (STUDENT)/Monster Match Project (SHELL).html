@@ -30,26 +30,28 @@
         
 		
 		// initialize global variables here
-		var p1Cards = 0;
-		var p2Cards = 0;
+		//Player 1 and player 2 cards
+		var p1Cards = 8;
+		var p2Cards = 8;
 
 		var currentIndex1 = "";
 		var currentIndex2 = "";
-
+		//current card vars
 		var currentCard1 = "";
 		var currentCard2 = "";
 
 		var cardsPerDeck = 8;
-
+		//score variable
 		var personalScore = 0;
-
+		//monster image array
 		let imageArray = ["monster1.svg", "monster2.svg", "monster3.svg",
         "monster4.svg"];
-
+		//gamestate
 		var gameState = "play"
 
 		var picture1 = ""
 		var picture2 = ""
+		// Card arrays
 		var Player1deck = ["monster1", "monster2", "monster3", "monster4", "monster1", "monster2", "monster3", "monster4"]
 		var	Player2deck = ["monster1", "monster2", "monster3", "monster4", "monster1", "monster2", "monster3", "monster4"]
 		
@@ -79,7 +81,7 @@
 			let displayOutput = 'These are the instructions: <br>'  
            
             displayOutput += "Instructions: Each player has a desk of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" The fastest player can claim the other player's card (it is removed from the deck of the slower player's deck and added to the faster player's deck)." +
-			"Player 1 can claim a match by pressing \"a\" before Player 2 can claim the match by pressing \"T\". If a player presses \"a\" or \"1\" when there is not a match," +
+			"Player 1 can claim a match by pressing \"a\" before Player 2 can claim the match by pressing \"l\". If a player presses \"a\" or \"l\" when there is not a match," +
 			"they will give up their card. If the cards don't match, press \"n\" to start the next round. When a player has claimed all the" +
 			"other player\'s cards, that player wins the game.";
             
@@ -114,10 +116,14 @@
 		// write a function that starts a new game of Monster Match
 		function newGame()
 		{
-			personalScore = 0;
+			p1Cards = 8;
+			p2Cards = 8
 			dealNew()
 			displayScores()
-			divIdInstructions.innerHTML = "Press Y if the images match. Else, press N"
+			divIdInstructions.innerHTML = "Instructions: Each player has a desk of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" The fastest player can claim the other player's card (it is removed from the deck of the slower player's deck and added to the faster player's deck)." +
+			"Player 1 can claim a match by pressing \"a\" before Player 2 can claim the match by pressing \"l\". If a player presses \"a\" or \"l\" when there is not a match," +
+			"they will give up their card. If the cards don't match, press \"n\" to start the next round. When a player has claimed all the" +
+			"other player\'s cards, that player wins the game."
 			gameState = "play"
 			
 			
@@ -130,28 +136,54 @@
 			if(p1Cards <= 0)
 			{
 				gameState = "Win"
-				divIdInstructions.innerHTML = "Player 1 Won! Woooohoooo!!!!"
+				divIdInstructions.innerHTML = "Player 2 Won! Woooohoooo!!!!"
 				
 			}
 			if(p2Cards <= 0)
 			{
 				gameState = "Win"
-				divIdInstructions.innerHTML = "Player 2 Won! Woooohoooo!!!!"
+				divIdInstructions.innerHTML = "Player 1 Won! Woooohoooo!!!!"
 				
 			}
 		}
 		// write a checkMatch(event) function
 		function checkMatch(event)
 		{
+			// event if key is pressed
 			curKey = event.key;
 			if (gameState == "pause")
 			{
-				if(curKey == " ")
+				if(curKey == "n")
 				{
 					gameState = "play"
 					dealNew()
 				}
 			}
+			// if invalid keys are pressed
+			if(curKey != "n")
+            {
+                divIdInstructions.innerHTML = "You pressed invalid key <h2>\"" + event.key + "\"</h2><br><h3>This Button Does NOTHING <br> Instructions: Each player has a desk of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" The fastest player can claim the other player's card (it is removed from the deck of the slower player's deck and added to the faster player's deck)." +
+			"Player 1 can claim a match by pressing \"a\" before Player 2 can claim the match by pressing \"l\". If a player presses \"a\" or \"l\" when there is not a match," +
+			"they will give up their card. If the cards don't match, press \"n\" to start the next round. When a player has claimed all the" +
+			"other player\'s cards, that player wins the game."
+			console.log("invalid key pressed")
+            }
+			if(curKey != "l")
+            {
+                divIdInstructions.innerHTML = "You pressed invalid key <h2>\"" + event.key + "\"</h2><br><h3>This Button Does NOTHING <br> Instructions: Each player has a desk of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" The fastest player can claim the other player's card (it is removed from the deck of the slower player's deck and added to the faster player's deck)." +
+			"Player 1 can claim a match by pressing \"a\" before Player 2 can claim the match by pressing \"l\". If a player presses \"a\" or \"l\" when there is not a match," +
+			"they will give up their card. If the cards don't match, press \"n\" to start the next round. When a player has claimed all the" +
+			"other player\'s cards, that player wins the game."
+			console.log("invalid key pressed")
+            }
+			if(curKey != " ")
+            {
+                divIdInstructions.innerHTML = "You pressed invalid key<h2>\"" + event.key + "\"</h2><br><h3>This Button Does NOTHING <br> Instructions: Each player has a desk of monster cards. Each round, a player will reveal a random card from their deck. If the cards match, it is a \"Monster Match.\" The fastest player can claim the other player's card (it is removed from the deck of the slower player's deck and added to the faster player's deck)." +
+			"Player 1 can claim a match by pressing \"a\" before Player 2 can claim the match by pressing \"l\". If a player presses \"a\" or \"l\" when there is not a match," +
+			"they will give up their card. If the cards don't match, press \"n\" to start the next round. When a player has claimed all the" +
+			"other player\'s cards, that player wins the game."
+			console.log("invalid key pressed")
+            }
 			
             if(gameState == "play")
             {
@@ -164,8 +196,12 @@
 						divIdInstructions.innerHTML = "There is a match on the board! Someone must claim it!"
 						gameState = "play"
 					}
+					else if(picture1 != picture2)
+					{
+						dealNew()
+					}
                 }
-                
+				//player 1 keybind
                 if(curKey == "a")
                 {
                     if(picture1 == picture2)
@@ -187,11 +223,8 @@
 					checkWinner()
                     
                 }
-                else if(curKey!= "a" || curKey!="l")
-                { 
-                    divIdInstructions.innerHTML = "Did you click the wrong key?"
-                }
-                
+          
+                // player 2 keybind
                 if(curKey == "l")
                 {
                     if(picture1 != picture2)
@@ -213,10 +246,7 @@
 					checkWinner()
                     
                 }
-                else if(curKey!= "y" || curKey!="n" || curKey != " ")
-                {
-                    divIdInstructions.innerHTML = "Did you click the wrong key?"
-                }
+                
             }
 		}
 	</script>
@@ -233,6 +263,7 @@
 		<!--add a "Show Instructions" button that runs a function when clicked-->
 		<input type="button" value="Show Instructions" onclick="displayInstructions()">
 		<!--here's a table you can have for free:-->
+		<!--Didn't end up using table-->
 		<table> 
 			<tr>
 				<th><span id="player1Id"></span></th>
